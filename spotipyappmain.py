@@ -10,8 +10,8 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 scope = "user-library-read playlist-modify-private user-read-private playlist-read-private"
 
-SPOTIPY_CLIENT_ID = "646952c802814c1a844ff8dd9574f5d2"
-SPOTIPY_CLIENT_SECRET = "c3503ee79b66498696aa6e16d45ef403"
+SPOTIPY_CLIENT_ID = "clientid"
+SPOTIPY_CLIENT_SECRET = "clientsecret"
 SPOTIPY_REDIRECT_URI = 'http://127.0.0.1:8000/'
 CACHE = '.spotipyoauthcache'
 
