@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Real Spotify Shuffle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <style>
+    .main {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+  .section {
+    flex: 1;
+  }
+    </style>
+  </head>
+  <body class="main">
+
+    <section class="hero is-primary is-bold">
+            <div class="hero-body">
+                <div class="container">
+                <h1 class="title">
+                  Real Spotify Shuffle By Alex Armenciu
+                </h1>
+                {% if not loggedin %}
+                <h2 class="subtitle">
+                  Login to Spotify to Continue
+                </h2>
+                {% endif %}
+                {% if loggedin %}
+                <h2 class="subtitle">
+                  Select a Playlist to Shuffle
+                </h2>
+                {% endif %}
+                </div>
+            </div>
+        </section>
+  {% if not loggedin %}
+  <section class="section">
+    <div class="container">
+      <form method="POST" action = '/spotify'>
+            <div class="field has-addons">
+                    <div class="control">
+                    <button class="button is-info">
+                        Login
+                    </button>
+                    </div>
+                  </div>    
+                </form>
+    </div>
+  </section>
+  {% endif %}
+  <section class="section">
+  <div class="tile is-ancestor">
+    {% if loggedin %}
+        <div class="tile is-parent">
+                <article class="tile is-child notification is-success">
+                  <div class="content">
+                    <p class="title">{{ spotify_username }}'s Playlists</p>
+                    <div class="content">
+                      <form method="POST" action="/spotify">
+                        <button class="button is-info"  name = 'playlistid' value = 'del'>
+                          Shuffle Another Playlist
+                        </button>
+                      </form>
+                    </div>
+                    <table>
+                      <tbody>
+                      {% set ns = namespace(idindex=0) %}
+                      {% for row in items %}
+                        <tr>
+                          <td>{{ row }}</td>
+                          <td>
+                            <form method="POST" action="/spotify">
+                              <button class="button is-info"  name = 'playlistid' value = '{{playlist_ids[ns.idindex]}}'>
+                                Shuffle
+                              </button>
+                              {% set ns.idindex = 1 +ns.idindex %}
+                            </form>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                      </table>
+                  </div>
+                </article>
+              </div>
+        
+        {% endif %}
+      </div>
+    </section>
+      <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+            A project by <a href="https://alexarmenciu.site">Alex Armenciu</a>. The source code can be found on
+            <a href="https://github.com/alexarmenciu">my github</a>.
+          </p>
+        </div>
+      </footer>
+  </body>
+  
+</html>
